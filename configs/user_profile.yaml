@@ -1,0 +1,251 @@
+# Desktop Butler — interest profile
+# Weights come from the Project DUCK spec (they sum to 100). Edit freely:
+# add/remove keywords or whole areas, then restart the butler.
+# Keywords are matched as whole words/phrases, case-insensitive, in the
+# title (counts double) and abstract.
+
+owner: Aditya
+
+areas:
+  quant_finance:
+    label: Quant Finance
+    weight: 25
+    keywords:
+      - statistical arbitrage
+      - arbitrage
+      - pairs trading
+      - alpha
+      - factor model
+      - factor investing
+      - market microstructure
+      - limit order book
+      - limit order
+      - order flow
+      - market making
+      - market maker
+      - optimal execution
+      - execution
+      - market impact
+      - price impact
+      - Sharpe ratio
+      - trading strategy
+      - portfolio optimization
+      - portfolio construction
+      - mean-variance
+      - risk parity
+      - derivatives pricing
+      - option pricing
+      - option
+      - risk-neutral density
+      - Hawkes process
+      - implied volatility
+      - volatility modeling
+      - stochastic volatility
+      - rough volatility
+      - financial time series
+      - asset pricing
+      - high-frequency trading
+      - backtest
+      - backtesting
+      - cross-sectional returns
+      - cross-section of stock returns
+      - stock returns
+      - return predictability
+
+  ai_ml:
+    label: AI/ML Research
+    weight: 25
+    keywords:
+      - transformer
+      - language model
+      - deep learning
+      - neural network
+      - machine learning
+      - attention mechanism
+      - reinforcement learning
+      - generative model
+      - diffusion model
+      - large language model
+      - LLM
+      - AI agent
+      - agent
+      - representation learning
+      - foundation model
+      - time series forecasting
+      - probabilistic machine learning
+      - Bayesian
+      - Gaussian process
+      - efficient inference
+      - quantization
+      - reproducibility
+      - benchmark
+
+  quant_ai:
+    label: Quant + AI
+    weight: 20
+    keywords:
+      - financial foundation model
+      - deep hedging
+      - deep learning for finance
+      - machine learning for trading
+      - reinforcement learning for trading
+      - RL execution
+      - return prediction
+      - stock return prediction
+      - alternative data
+      - financial LLM
+      - LLM for finance
+      - financial forecasting
+      - news-based trading
+      - text-based return prediction
+      - neural SDE
+      - trading agent
+      - deep portfolio
+
+  markets_macro:
+    label: Markets & Macro
+    weight: 15
+    keywords:
+      - monetary policy
+      - Federal Reserve
+      - inflation
+      - CPI
+      - interest rate
+      - yield curve
+      - Treasury
+      - employment
+      - central bank
+      - financial regulation
+      - systemic risk
+      - liquidity
+      - market structure
+      - stock market
+      - Treasury yields
+      - volatility
+      - recession
+      - jobs report
+      - rate cut
+      - rate hike
+
+  careers:
+    label: Careers
+    weight: 10
+    keywords:
+      - internship
+      - hiring
+      - research program
+      - fellowship
+      - quant researcher
+      - interview
+      - hedge fund
+      - Jane Street
+      - Citadel
+      - Two Sigma
+      - Hudson River Trading
+
+  infra:
+    label: Infra & Open Source
+    weight: 5
+    keywords:
+      - PyTorch
+      - JAX
+      - CUDA
+      - vLLM
+      - GPU
+      - open source
+      - library
+      - simulation engine
+      - vectorized
+      - deployment
+
+# arXiv searches run at every briefing (via the Python `arxiv` library).
+# Query syntax: https://info.arxiv.org/help/api/user-manual.html#query_details
+arxiv_searches:
+  - name: Quantitative Finance (all q-fin)
+    query: >-
+      cat:q-fin.PM OR cat:q-fin.TR OR cat:q-fin.ST OR cat:q-fin.CP OR
+      cat:q-fin.RM OR cat:q-fin.MF OR cat:q-fin.PR OR cat:q-fin.GN OR cat:q-fin.EC
+    max_results: 60
+  - name: ML x Finance
+    query: >-
+      (cat:cs.LG OR cat:stat.ML OR cat:cs.AI) AND
+      (abs:finance OR abs:financial OR abs:trading OR abs:portfolio OR abs:"asset pricing")
+    max_results: 40
+  - name: Quant topics
+    query: >-
+      abs:"market microstructure" OR abs:"limit order book" OR abs:"optimal execution" OR
+      abs:"deep hedging" OR abs:"statistical arbitrage" OR abs:"stochastic control"
+    max_results: 30
+  - name: Time-series & foundation models
+    query: >-
+      (cat:cs.LG OR cat:stat.ML) AND abs:"time series" AND
+      (abs:"foundation model" OR abs:transformer OR abs:forecasting)
+    max_results: 30
+  - name: LLMs & agents
+    query: cat:cs.AI AND abs:"large language model" AND (abs:agent OR abs:reasoning)
+    max_results: 25
+  - name: Computational finance & engineering
+    query: cat:cs.CE
+    max_results: 15
+
+briefing:
+  size: 12               # items in each briefing
+  max_per_area: 4        # diversification: no single area dominates
+  max_papers: 6          # ...and no single kind of source either
+  max_news: 6
+  max_discussions: 2
+  alert_threshold: 80    # butler raises an alert at or above this score (0-100)
+
+# Everything below runs at each briefing next to arXiv. Set enabled: false to turn a source off.
+sources:
+  rss:                   # feedparser
+    enabled: true
+    max_age_days: 7
+    feeds:
+      - {name: Federal Reserve press releases, url: "https://www.federalreserve.gov/feeds/press_all.xml", kind: official}
+      - {name: Federal Reserve speeches, url: "https://www.federalreserve.gov/feeds/speeches.xml", kind: official}
+      - {name: Jane Street Blog, url: "https://blog.janestreet.com/feed.xml", kind: research_blog}
+      - {name: OpenAI News, url: "https://openai.com/news/rss.xml", kind: lab_blog}
+      - {name: Google DeepMind Blog, url: "https://deepmind.google/blog/rss.xml", kind: lab_blog}
+      - {name: Google Research Blog, url: "https://research.google/blog/rss/", kind: lab_blog}
+      - {name: Hugging Face Blog, url: "https://huggingface.co/blog/feed.xml", kind: lab_blog}
+      - {name: BAIR Blog, url: "https://bair.berkeley.edu/blog/feed.xml", kind: lab_blog}
+      - {name: NVIDIA Blog, url: "https://blogs.nvidia.com/feed/", kind: lab_blog}
+
+  gdelt:                 # gdeltdoc — worldwide news headlines, free, no key
+    enabled: true
+    timespan: 1d
+    per_query: 25
+    queries:             # each line is one search; terms in a line are OR'ed
+      - [quantitative trading, quant fund, hedge fund]
+      - [Federal Reserve, interest rates, inflation report]
+      - [market volatility, stock market, Treasury yields]
+      - [AI model, large language model, OpenAI, Anthropic]
+      - [Jane Street, Citadel Securities, Two Sigma, Hudson River Trading]
+
+  hackernews:            # Algolia HN search API via httpx
+    enabled: true
+    min_points: 60
+    days: 2
+    queries: [quant, trading, LLM, "machine learning", PyTorch, finance]
+
+  markets:               # yfinance (Yahoo Finance, delayed; personal use)
+    enabled: true
+    instruments:
+      - {ticker: "^GSPC", name: S&P 500, kind: index}
+      - {ticker: "^IXIC", name: Nasdaq Composite, kind: index}
+      - {ticker: "^VIX", name: VIX, kind: vol}
+      - {ticker: "^TNX", name: 10-year Treasury yield, kind: rate}
+      - {ticker: "DX-Y.NYB", name: US dollar index, kind: fx}
+      - {ticker: "GC=F", name: Gold, kind: commodity}
+      - {ticker: "CL=F", name: WTI crude oil, kind: commodity}
+      - {ticker: "BTC-USD", name: Bitcoin, kind: crypto}
+
+  fred:                  # fredapi — needs a free key: https://fred.stlouisfed.org/docs/api/api_key.html
+    enabled: true        # stays idle until FRED_API_KEY is set (setup_mac.sh asks for it)
+    series:
+      - {id: CPIAUCSL, name: CPI (all items), units: index, yoy: true}
+      - {id: UNRATE, name: Unemployment rate, units: "%"}
+      - {id: FEDFUNDS, name: Fed funds rate, units: "%"}
+      - {id: DGS10, name: 10-year Treasury yield, units: "%"}
+      - {id: T10Y2Y, name: 10y minus 2y spread, units: "pp"}

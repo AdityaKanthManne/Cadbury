@@ -1,0 +1,174 @@
+/* A desk for the butler to stand on: wallpaper, menu bar, one window. */
+html.view-demo, html.view-demo body, html.view-demo #root { height: 100%; }
+html.view-demo body {
+  margin: 0;
+  background: var(--wall);
+  color: var(--ink);
+  font: 400 var(--t-md)/1.5 var(--font-text);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+.desk {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 85% 100%, var(--wall-glow) 0%, transparent 60%),
+    linear-gradient(160deg, var(--wall) 0%, var(--wall-2) 100%);
+}
+
+.menubar {
+  position: relative;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 30px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  background: var(--bar);
+  color: var(--bar-ink);
+  font-size: var(--t-xs);
+  backdrop-filter: blur(8px);
+}
+.menubar-app { font-weight: 700; }
+.menubar-right { display: flex; align-items: center; gap: 12px; font-variant-numeric: tabular-nums; }
+.menubar-icon { display: inline-flex; border: 0; padding: 0; background: none; cursor: pointer; border-radius: 4px; }
+
+.intro {
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  max-width: 470px;
+  margin: 28px 0 0 max(16px, env(safe-area-inset-left, 0px));
+  margin-right: max(16px, env(safe-area-inset-right, 0px));
+  padding: 20px 22px 18px;
+  background: var(--linen);
+  border: 1px solid var(--silver);
+  border-radius: 10px;
+  box-shadow: 0 14px 40px rgb(15 20 30 / .22);
+}
+.intro h1 {
+  margin: 0 0 8px;
+  font: 650 var(--t-xl)/1.15 var(--font-display);
+  text-wrap: balance;
+}
+.intro p { margin: 0 0 10px; max-width: 60ch; }
+.intro ul { margin: 0 0 12px; padding-left: 18px; display: grid; gap: 2px; }
+.intro-small { font-size: var(--t-xs); color: var(--ink-2); }
+
+.desk-note { position: absolute; z-index: 35; }
+.butler-dock { position: absolute; z-index: 40; width: 240px; height: 290px; touch-action: none; }
+
+.win {
+  position: absolute;
+  z-index: 20;
+  top: 44px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1080px, calc(100% - 48px));
+  height: calc(100% - 64px);
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--linen);
+  box-shadow: 0 24px 70px rgb(10 14 22 / .45), 0 0 0 1px rgb(10 14 22 / .2);
+}
+.win.is-open { animation: win-in 180ms ease-out; }
+@keyframes win-in { from { opacity: 0; transform: translateX(-50%) scale(.98); } to { opacity: 1; transform: translateX(-50%); } }
+.win-bar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 34px;
+  padding: 0 12px;
+  background: var(--livery-2);
+  color: #e3e6ec;
+  font-size: var(--t-xs);
+}
+.win-title { flex: 1; text-align: center; margin-right: 26px; }
+.win-close {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--claret);
+  color: #fbfbf8;
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+}
+.win-body { flex: 1; min-height: 0; overflow: auto; }
+.win-body .dash { min-height: 100%; }
+
+.ctx {
+  position: fixed;
+  z-index: 60;
+  min-width: 210px;
+  padding: 5px;
+  background: var(--linen);
+  color: var(--ink);
+  border: 1px solid var(--silver);
+  border-radius: 8px;
+  box-shadow: 0 12px 32px rgb(10 14 22 / .3);
+  font-size: var(--t-sm);
+}
+.ctx button {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  width: 100%;
+  padding: 5px 10px 5px 8px;
+  border: 0;
+  border-radius: 5px;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+.ctx button:hover:not(:disabled), .ctx button:focus-visible { background: var(--livery); color: #fbfbf8; outline: none; }
+.ctx button:disabled { color: var(--waistcoat); cursor: default; }
+.ctx small { margin-left: auto; color: var(--waistcoat); font-size: var(--t-xs); }
+.ctx-check { display: inline-block; width: 14px; }
+.ctx hr { margin: 4px 6px; border: 0; border-top: 1px solid var(--silver-soft); }
+
+.toast {
+  position: absolute;
+  z-index: 70;
+  left: 50%;
+  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  max-width: min(440px, calc(100% - 32px));
+  padding: 10px 14px;
+  background: var(--livery);
+  color: #fbfbf8;
+  border-radius: 8px;
+  font-size: var(--t-sm);
+  box-shadow: 0 10px 30px rgb(10 14 22 / .35);
+}
+
+@media (max-width: 720px) {
+  .desk-note { left: 8px !important; right: 8px; }
+  /* on a phone he steps into the corner while the briefing is open */
+  .butler-dock.with-window {
+    left: auto !important;
+    top: auto !important;
+    right: max(0px, env(safe-area-inset-right, 0px));
+    bottom: env(safe-area-inset-bottom, 0px);
+    transform: scale(.45);
+    transform-origin: bottom right;
+  }
+  .butler-dock.with-window .bubble { display: none; }
+  .intro { margin-top: 16px; padding: 16px; }
+  .intro h1 { font-size: var(--t-lg); }
+  .win { top: 30px; left: 0; transform: none; width: 100%; height: calc(100% - 30px); border-radius: 0; }
+  .win.is-open { animation: none; }
+}
+@media (prefers-reduced-motion: reduce) { .win.is-open { animation: none; } }
+
+/* touch screens have no hover: keep the status bubble from lingering after a tap */
+@media (hover: none) { .butler-dock .bubble { display: none; } }

@@ -1,0 +1,95 @@
+/* Floating butler window: fully transparent apart from the character. */
+html.view-butler,
+html.view-butler body,
+html.view-butler #root {
+  background: transparent !important;
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.butler-stage {
+  position: relative;
+  width: 240px;
+  height: 290px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  font-family: "Source Sans 3", system-ui, sans-serif;
+}
+
+.butler-hit {
+  position: relative;
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: grab;
+  line-height: 0;
+  filter: drop-shadow(0 6px 6px rgb(31 36 48 / 0.28));
+}
+.butler-hit:active { cursor: grabbing; }
+.butler-hit:focus-visible { outline: 2px solid var(--claret); outline-offset: 2px; border-radius: 12px; }
+
+/* one orchestrated moment: when papers arrive he steps forward once */
+[data-mood="delivered"] .butler-sprite,
+[data-mood="alert"] .butler-sprite {
+  animation: present 900ms cubic-bezier(.2, .9, .3, 1.2) 1;
+}
+@keyframes present {
+  0% { transform: translateY(10px) scale(.96); }
+  100% { transform: none; }
+}
+
+.badge {
+  position: absolute;
+  top: 26px;
+  right: 6px;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 7px;
+  border-radius: 13px;
+  background: var(--claret);
+  color: var(--on-livery);
+  font: 700 15px/26px "Source Sans 3", system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+  box-shadow: 0 0 0 2px var(--linen);
+}
+
+.zzz {
+  position: absolute;
+  top: 40px;
+  right: 18px;
+  /* sits on whatever wallpaper you have: light text with a dark halo reads on both */
+  color: var(--on-livery);
+  text-shadow: 0 0 3px rgb(15 18 25 / .9), 0 1px 2px rgb(15 18 25 / .9);
+  font: italic 600 15px/1 "Bricolage Grotesque Variable", system-ui, sans-serif;
+  letter-spacing: 2px;
+}
+
+.bubble {
+  box-sizing: border-box;
+  width: 228px;
+  margin-bottom: 4px;
+  padding: 9px 12px;
+  border-radius: 12px 12px 12px 3px;
+  background: var(--livery);
+  color: var(--on-livery);
+  /* a light rim keeps the bubble's edge visible against dark windows and wallpapers */
+  border: 1px solid rgb(255 255 255 / .16);
+  box-shadow: 0 6px 18px rgb(0 0 0 / .35);
+  font-size: 14px;
+  line-height: 1.4;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 160ms ease, transform 160ms ease;
+  pointer-events: none;
+}
+.bubble.is-visible { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .bubble { transition: none; }
+  [data-mood] .butler-sprite { animation: none !important; }
+}

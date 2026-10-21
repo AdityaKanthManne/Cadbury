@@ -1,0 +1,103 @@
+@import "@fontsource-variable/bricolage-grotesque";
+@import "@fontsource/source-sans-3/400.css";
+@import "@fontsource/source-sans-3/600.css";
+@import "@fontsource/source-sans-3/700.css";
+
+/* Palette taken from the butler's own livery */
+:root {
+  --livery: #1f2430;      /* tailcoat */
+  --livery-2: #2b3140;
+  --waistcoat: #5f6673;   /* captions & meta: 5.6:1 on linen (WCAG AA) */
+  --linen: #fbfbf8;       /* shirt front / page */
+  --silver: #c9ced6;      /* salver, hairlines */
+  --silver-soft: #e7e9ed;
+  --claret: #9e2b32;      /* armchair & telephone — the one accent */
+  --ink: #1f2430;
+  --ink-2: #4c5361;
+
+  --font-display: "Bricolage Grotesque Variable", "Avenir Next", system-ui, sans-serif;
+  --font-text: "Source Sans 3", "Helvetica Neue", system-ui, sans-serif;
+
+  /* type scale (1.2 ratio from 16px) */
+  --t-xs: 12.5px;
+  --t-sm: 14px;
+  --t-md: 16px;
+  --t-lg: 19px;
+  --t-xl: 23px;
+  --t-2xl: 33px;
+
+  /* text that sits on the dark livery (bubble, badge, masthead) — same in both themes */
+  --on-livery: #fbfbf8;
+  --on-livery-2: #d5d9e0;
+  /* selected segment / pressed state */
+  --pressed-bg: #1f2430;
+  --pressed-ink: #fbfbf8;
+
+  /* semantic: price moves (separate from the claret accent) */
+  --up: #2f7a4f;
+  --down: #a3353b;
+
+  /* demo desktop */
+  --wall: #4f6b8a;
+  --wall-2: #2c3b52;
+  --wall-glow: #7f97b1;
+  --bar: rgb(251 251 248 / .82);
+  --bar-ink: #1f2430;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --linen: #15181f;
+    --silver: #3a4050;
+    --silver-soft: #222733;
+    --ink: #eceef2;
+    --ink-2: #b4bac5;
+    --waistcoat: #8f97a3;
+    --claret: #e06a70;
+    --up: #5fbf87;
+    --down: #e2777c;
+    --pressed-bg: #c9ced6;
+    --pressed-ink: #15181f;
+    --wall: #2a3647;
+    --wall-2: #121822;
+    --wall-glow: #3d4f66;
+    --bar: rgb(21 24 31 / .82);
+    --bar-ink: #eceef2;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --linen: #15181f;
+  --silver: #3a4050;
+  --silver-soft: #222733;
+  --ink: #eceef2;
+  --ink-2: #b4bac5;
+  --waistcoat: #8f97a3;
+  --claret: #e06a70;
+  --up: #5fbf87;
+  --down: #e2777c;
+  --pressed-bg: #c9ced6;
+  --pressed-ink: #15181f;
+  --wall: #2a3647;
+  --wall-2: #121822;
+  --wall-glow: #3d4f66;
+  --bar: rgb(21 24 31 / .82);
+  --bar-ink: #eceef2;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+html.view-dashboard body {
+  margin: 0;
+  background: var(--linen);
+  color: var(--ink);
+  font: 400 var(--t-md)/1.5 var(--font-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--claret); outline-offset: 2px; }

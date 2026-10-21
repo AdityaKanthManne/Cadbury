@@ -1,0 +1,91 @@
+{
+  "cell": [
+    150,
+    190
+  ],
+  "scale": 2,
+  "anims": {
+    "idle": {
+      "frames": 4,
+      "fps": 1.2,
+      "file": "idle.png"
+    },
+    "think": {
+      "frames": 1,
+      "fps": 1,
+      "file": "think.png"
+    },
+    "walk_r": {
+      "frames": 8,
+      "fps": 10,
+      "file": "walk_r.png"
+    },
+    "walk_l": {
+      "frames": 8,
+      "fps": 10,
+      "file": "walk_l.png"
+    },
+    "wave": {
+      "frames": 1,
+      "fps": 1,
+      "file": "wave.png"
+    },
+    "point": {
+      "frames": 1,
+      "fps": 1,
+      "file": "point.png"
+    },
+    "bow": {
+      "frames": 1,
+      "fps": 1,
+      "file": "bow.png"
+    },
+    "serve": {
+      "frames": 1,
+      "fps": 1,
+      "file": "serve.png"
+    },
+    "phone": {
+      "frames": 1,
+      "fps": 1,
+      "file": "phone.png"
+    },
+    "read": {
+      "frames": 1,
+      "fps": 1,
+      "file": "read.png"
+    },
+    "sleep": {
+      "frames": 1,
+      "fps": 1,
+      "file": "sleep.png"
+    },
+    "dust": {
+      "frames": 1,
+      "fps": 1,
+      "file": "dust.png"
+    },
+    "jump": {
+      "frames": 4,
+      "fps": 8,
+      "file": "jump.png"
+    }
+  },
+  "faces": {
+    "size": 48,
+    "names": [
+      "happy",
+      "smile",
+      "neutral",
+      "surprised",
+      "confused",
+      "worried",
+      "angry",
+      "laugh",
+      "sleepy",
+      "blink",
+      "talk1",
+      "talk2"
+    ]
+  }
+}
