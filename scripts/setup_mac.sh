@@ -15,6 +15,9 @@
 
 set -euo pipefail
 cd "$(dirname "$0")/.."
+# --yes: run without questions (installs Rust if missing, skips the optional FRED key prompt)
+YES=0
+[[ "${1:-}" == "--yes" ]] && YES=1
 ROOT="$(pwd)"
 say()  { printf "\n\033[1m%s\033[0m\n" "$*"; }
 fail() { printf "\n\033[31m%s\033[0m\n" "$*" >&2; exit 1; }
@@ -45,7 +48,8 @@ if ! command -v cargo >/dev/null 2>&1; then
   [[ -x "$HOME/.cargo/bin/cargo" ]] && export PATH="$HOME/.cargo/bin:$PATH"
 fi
 if ! command -v cargo >/dev/null 2>&1; then
-  read -r -p "  Rust is needed to build the desktop app. Install it now via rustup? [Y/n] " ans
+  ans=Y
+  [[ $YES == 1 ]] || read -r -p "  Rust is needed to build the desktop app. Install it now via rustup? [Y/n] " ans
   [[ "${ans:-Y}" =~ ^[Nn] ]] && fail "Rust is required. Install from https://rustup.rs and re-run."
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal
   export PATH="$HOME/.cargo/bin:$PATH"
@@ -77,7 +81,7 @@ say "3/7  Running tests"
 # ---- 4. FRED key (optional) + one live fetch ------------------------------------
 DATA_DIR="$HOME/Library/Application Support/DesktopButler"
 mkdir -p "$DATA_DIR"
-if [[ -z "${FRED_API_KEY:-}" ]] && ! grep -q "^FRED_API_KEY=" "$DATA_DIR/.env" 2>/dev/null; then
+if [[ $YES == 0 && -z "${FRED_API_KEY:-}" ]] && ! grep -q "^FRED_API_KEY=" "$DATA_DIR/.env" 2>/dev/null; then
   say "4/7  Optional: FRED key for CPI, unemployment and rates"
   echo "  Free key: https://fred.stlouisfed.org/docs/api/api_key.html (create an account, request a key)."
   read -r -p "  Paste your FRED API key, or press Return to skip: " fredkey
